@@ -52,7 +52,7 @@ namespace NzbDrone.Core.Notifications
                                     quality);
         }
 
-        private bool HandleTag(ProviderDefinition definition, Series series)
+        private bool ShouldHandleSeries(ProviderDefinition definition, Series series)
         {
             var notificationDefinition = (NotificationDefinition) definition;
 
@@ -79,7 +79,7 @@ namespace NzbDrone.Core.Notifications
             {
                 try
                 {
-                    if (!HandleTag(notification.Definition, message.Episode.Series)) continue;
+                    if (!ShouldHandleSeries(notification.Definition, message.Episode.Series)) continue;
                     notification.OnGrab(messageBody);
                 }
 
@@ -102,7 +102,7 @@ namespace NzbDrone.Core.Notifications
             {
                 try
                 {
-                    if (!HandleTag(notification.Definition, message.Episode.Series)) continue;
+                    if (!ShouldHandleSeries(notification.Definition, message.Episode.Series)) continue;
 
                     if (downloadMessage.OldFiles.Any() && !((NotificationDefinition) notification.Definition).OnUpgrade)
                     {
@@ -125,7 +125,7 @@ namespace NzbDrone.Core.Notifications
             {
                 try
                 {
-                    if (!HandleTag(notification.Definition, message.Series)) continue;
+                    if (!ShouldHandleSeries(notification.Definition, message.Series)) continue;
                     notification.AfterRename(message.Series);
                 }
 
